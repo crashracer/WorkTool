@@ -1,0 +1,433 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{22A8127B-0E64-49AC-9350-18B4639F104D}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WorkTool</RootNamespace>
+    <AssemblyName>WorkTool</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>run_72px_28277_easyicon.net.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="MyClassLib_rml, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\MyClassLib_rml.dll</HintPath>
+    </Reference>
+    <Reference Include="p4api.net, Version=2016.1.140.7015, Culture=neutral, PublicKeyToken=f6b9b9d036c873e1, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\p4api.net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationClient" />
+    <Reference Include="UIAutomationTypes" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Form_AddBundleSource.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_AddBundleSource.designer.cs">
+      <DependentUpon>Form_AddBundleSource.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_addTagLine.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_addTagLine.designer.cs">
+      <DependentUpon>Form_addTagLine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_ChangeLCode_inFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_ChangeLCode_inFile.designer.cs">
+      <DependentUpon>Form_ChangeLCode_inFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_CheckRegex.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_CheckRegex.designer.cs">
+      <DependentUpon>Form_CheckRegex.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_checkSpecialFormatString.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_checkSpecialFormatString.Designer.cs">
+      <DependentUpon>Form_checkSpecialFormatString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_ChkCopyrightSymbol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_ChkCopyrightSymbol.Designer.cs">
+      <DependentUpon>Form_ChkCopyrightSymbol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_ChkEscapedXLF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_ChkEscapedXLF.designer.cs">
+      <DependentUpon>Form_ChkEscapedXLF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_chkFileNameAfterVerId.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_chkFileNameAfterVerId.designer.cs">
+      <DependentUpon>Form_chkFileNameAfterVerId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_chkLocaleCode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_chkLocaleCode.designer.cs">
+      <DependentUpon>Form_chkLocaleCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_chkSpaceXML.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_chkSpaceXML.Designer.cs">
+      <DependentUpon>Form_chkSpaceXML.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_chkTabInTag.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_chkTabInTag.Designer.cs">
+      <DependentUpon>Form_chkTabInTag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_convertXMLtoExcelForTM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_convertXMLtoExcelForTM.Designer.cs">
+      <DependentUpon>Form_convertXMLtoExcelForTM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_CopyXliff.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_CopyXliff.Designer.cs">
+      <DependentUpon>Form_CopyXliff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_copyXliffToProject.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_copyXliffToProject.Designer.cs">
+      <DependentUpon>Form_copyXliffToProject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_downloadP4files.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_downloadP4files.Designer.cs">
+      <DependentUpon>Form_downloadP4files.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_editFilelistForP4Dowload.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_editFilelistForP4Dowload.Designer.cs">
+      <DependentUpon>Form_editFilelistForP4Dowload.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_editTagsInXLF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_editTagsInXLF.Designer.cs">
+      <DependentUpon>Form_editTagsInXLF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_exportTermlistXLF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_exportTermlistXLF.Designer.cs">
+      <DependentUpon>Form_exportTermlistXLF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Main.Designer.cs">
+      <DependentUpon>Form_Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_ModifyFileForAlign.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_ModifyFileForAlign.Designer.cs">
+      <DependentUpon>Form_ModifyFileForAlign.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_moveBundle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_moveBundle.Designer.cs">
+      <DependentUpon>Form_moveBundle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_moveFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_moveFile.Designer.cs">
+      <DependentUpon>Form_moveFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_pickUpURLsFromXLF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_pickUpURLsFromXLF.Designer.cs">
+      <DependentUpon>Form_pickUpURLsFromXLF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_regularFileContent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_regularFileContent.Designer.cs">
+      <DependentUpon>Form_regularFileContent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_regulateXLFForFixingBug.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_regulateXLFForFixingBug.Designer.cs">
+      <DependentUpon>Form_regulateXLFForFixingBug.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_RemoveSentence.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_RemoveSentence.Designer.cs">
+      <DependentUpon>Form_RemoveSentence.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_RemSen_AddSen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_RemSen_AddSen.Designer.cs">
+      <DependentUpon>Form_RemSen_AddSen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_renameFilePath.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_renameFilePath.Designer.cs">
+      <DependentUpon>Form_renameFilePath.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_ReplaceForTM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_ReplaceForTM.Designer.cs">
+      <DependentUpon>Form_ReplaceForTM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_setRegExpOfQAVerification.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_setRegExpOfQAVerification.Designer.cs">
+      <DependentUpon>Form_setRegExpOfQAVerification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form_AddBundleSource.resx">
+      <DependentUpon>Form_AddBundleSource.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_addTagLine.resx">
+      <DependentUpon>Form_addTagLine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_ChangeLCode_inFile.resx">
+      <DependentUpon>Form_ChangeLCode_inFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_CheckRegex.resx">
+      <DependentUpon>Form_CheckRegex.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_checkSpecialFormatString.resx">
+      <DependentUpon>Form_checkSpecialFormatString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_ChkCopyrightSymbol.resx">
+      <DependentUpon>Form_ChkCopyrightSymbol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_ChkEscapedXLF.resx">
+      <DependentUpon>Form_ChkEscapedXLF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_chkFileNameAfterVerId.resx">
+      <DependentUpon>Form_chkFileNameAfterVerId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_chkLocaleCode.resx">
+      <DependentUpon>Form_chkLocaleCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_chkSpaceXML.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Form_chkSpaceXML1.Designer.cs</LastGenOutput>
+      <DependentUpon>Form_chkSpaceXML.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_chkTabInTag.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Form_chkTabInTag1.Designer.cs</LastGenOutput>
+      <DependentUpon>Form_chkTabInTag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_convertXMLtoExcelForTM.resx">
+      <DependentUpon>Form_convertXMLtoExcelForTM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_CopyXliff.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Form_CopyXliff1.Designer.cs</LastGenOutput>
+      <DependentUpon>Form_CopyXliff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_copyXliffToProject.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Form_copyXliffToProject1.Designer.cs</LastGenOutput>
+      <DependentUpon>Form_copyXliffToProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_downloadP4files.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Form_downloadP4files1.Designer.cs</LastGenOutput>
+      <DependentUpon>Form_downloadP4files.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_editFilelistForP4Dowload.resx">
+      <DependentUpon>Form_editFilelistForP4Dowload.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_editTagsInXLF.resx">
+      <DependentUpon>Form_editTagsInXLF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_exportTermlistXLF.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Form_exportTermlistXLF1.Designer.cs</LastGenOutput>
+      <DependentUpon>Form_exportTermlistXLF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Main.resx">
+      <DependentUpon>Form_Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_ModifyFileForAlign.resx">
+      <DependentUpon>Form_ModifyFileForAlign.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_moveBundle.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Form_moveBundle1.Designer.cs</LastGenOutput>
+      <DependentUpon>Form_moveBundle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_moveFile.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Form_moveFile1.Designer.cs</LastGenOutput>
+      <DependentUpon>Form_moveFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_pickUpURLsFromXLF.resx">
+      <DependentUpon>Form_pickUpURLsFromXLF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_regularFileContent.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Form_regularFileContent1.Designer.cs</LastGenOutput>
+      <DependentUpon>Form_regularFileContent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_regulateXLFForFixingBug.resx">
+      <DependentUpon>Form_regulateXLFForFixingBug.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_RemoveSentence.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Form_RemoveSentence1.Designer.cs</LastGenOutput>
+      <DependentUpon>Form_RemoveSentence.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_RemSen_AddSen.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Form_RemSen_AddSen1.Designer.cs</LastGenOutput>
+      <DependentUpon>Form_RemSen_AddSen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_renameFilePath.resx">
+      <DependentUpon>Form_renameFilePath.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_ReplaceForTM.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Form_ReplaceForTM1.Designer.cs</LastGenOutput>
+      <DependentUpon>Form_ReplaceForTM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_setRegExpOfQAVerification.resx">
+      <DependentUpon>Form_setRegExpOfQAVerification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="run_72px_28277_easyicon.net.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
