@@ -27,7 +27,7 @@ namespace WorkTool
             var fileName = Path.GetFileName(fileInput);
             var content = File.ReadAllText(fileInput);
             var nsdef = Regex.Match(content, @"(?<=xliff\b[^<>]*xmlns[ \t]*=[ \t]*"")[^""]+(?="")").Value;
-            content = Regex.Replace(content, @"&(?!amp;|lt;|gt;)(#\d+?;|[a-zA-Z]+?;)", "&amp;#38;$1");
+            content = Regex.Replace(content, @"&(?!amp;|lt;|gt;)(([a-z]+|[A-Z]+);)", "&amp;$1");
 
             XmlReaderSettings xrs = new XmlReaderSettings();
             xrs.CheckCharacters = false;
@@ -49,9 +49,13 @@ namespace WorkTool
             {
                 var sourceString = sourceNd.InnerXml;
                 sourceString = sourceString.Replace(" xmlns=\"" + nsdef + "\"", "");
-                sourceString = Regex.Replace(sourceString, @"&amp;#38;(?!amp;|lt;|gt;)(#\d+?;|[a-zA-Z]+?;)", "&$1");
+                sourceString = Regex.Replace(sourceString, @"&(amp;)+|&(amp;)*#38;", "&");
+                sourceString = Regex.Replace(sourceString, @"&(amp;)*lt;|&(amp;)*#60;", "<");
+                sourceString = Regex.Replace(sourceString, @"&(amp;)*gt;|&(amp;)*#62;", ">");
+                sourceString = Regex.Replace(sourceString, @"&(amp;)*apos;|&(amp;)*#39;", "'");
+                sourceString = Regex.Replace(sourceString, @"&(amp;)*quot;|&(amp;)*#34;", "\"");
 
-                var matchUrls = Regex.Matches(sourceString, @"(http|ftp|https)://[^\r\n\s<>""']+");
+                var matchUrls = Regex.Matches(sourceString, @"(https?|ftp)://[^\s<>'""]*(<[a-zA-Z\d_]+>)?[^\s<>'""]*(?=[\.\?\!,;]\s)|(https?|ftp)://[^\s<>'""]*(<[a-zA-Z\d_]+>)?[^\s<>'""]*");
                 if (matchUrls.Count >= 1)
                 {
                     foreach (Match matchUrl in matchUrls)
@@ -68,7 +72,7 @@ namespace WorkTool
                     }
                 }
 
-                var matchUrls2 = Regex.Matches(sourceString, @"(?<!/)www\.[^\r\n\s<>""']+");
+                var matchUrls2 = Regex.Matches(sourceString, @"www\.[^\s<>'""]*(<[a-zA-Z\d_]+>)?[^\s<>'""]*(?=[\.\?\!,;]\s)|www\.[^\s<>'""]*(<[a-zA-Z\d_]+>)?[^\s<>'""]*");
                 if (matchUrls2.Count >= 1)
                 {
                     foreach (Match matchUrl2 in matchUrls2)
@@ -85,12 +89,12 @@ namespace WorkTool
                     }
                 }
 
-                var matchUrls3 = Regex.Matches(sourceString, @"[^\r\n\s""<>]+\.(com|cn)");
+                var matchUrls3 = Regex.Matches(sourceString, @"[^\s<>'""]+\.(com|cn)\b");
                 if (matchUrls3.Count >= 1)
                 {
                     foreach (Match matchUrl3 in matchUrls3)
                     {
-                        if (!Regex.IsMatch(matchUrl3.Value, @"(http|ftp|https)://|www\."))
+                        if (!Regex.IsMatch(matchUrl3.Value, @"(https?|ftp)://|www\."))
                         {
                             rows++;
                             ws_UrlList.Cells[rows, 1].NumberFormatLocal = "@";

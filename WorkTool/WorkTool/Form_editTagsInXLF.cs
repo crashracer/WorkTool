@@ -46,9 +46,9 @@ namespace WorkTool
             var TuNds = xmlDoc.SelectNodes("//xlfns:trans-unit", xnm);
             foreach (XmlNode TuNd in TuNds)
             {
-                var noteNd = TuNd.SelectSingleNode("./xlfns:note[@from='tags']", xnm);
-                if (noteNd != null)
-                    noteNd.InnerXml = tagsInfo;
+                var tagsNoteNd = TuNd.SelectSingleNode("./xlfns:note[@from='tags']", xnm);
+                if (tagsNoteNd != null)
+                    tagsNoteNd.InnerXml = tagsInfo;
                 else
                 {
                     XmlNode addNd = xmlDoc.CreateNode(XmlNodeType.Element, "note", nsdef);
@@ -82,12 +82,90 @@ namespace WorkTool
             File.WriteAllText(fileOut, addSpace3, Encoding.UTF8);
         }
 
+        public void editTagsAndCommentInXLF(String fileIn, String fileOut, String tagsInfo, String Comment)
+        {
+            var content = File.ReadAllText(fileIn);
+            var defxml = Regex.Match(content, @"<\?xml\b[^<>]*\?>").Value;
+            var nsdef = Regex.Match(content, @"(?<=<xliff\b[^<>]*xmlns[ \t]*=[ \t]*"")[^""]+(?="")").Value;
+            var spaceTU = Regex.Match(content, @"(?<=[\r\n]+)[ \t]*(?=<trans-unit\b)").Value;
+            var spaceTUChild = Regex.Match(content, @"(?<=[\r\n]+)[ \t]*(?=<source\b)").Value;
+            content = Regex.Replace(content, @"&(?!amp;|lt;|gt;)(#\d+?;|[a-zA-Z]+?;)", "&amp;#38;$1");
+
+            XmlReaderSettings xrs = new XmlReaderSettings();
+            xrs.CheckCharacters = false;
+            xrs.IgnoreWhitespace = false;
+            xrs.NameTable = new NameTable();
+            XmlNamespaceManager xnm = new XmlNamespaceManager(xrs.NameTable);
+            xnm.AddNamespace("xlfns", nsdef);
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.PreserveWhitespace = true;
+            var sr = new StringReader(content);
+            using (var xr = XmlReader.Create(sr, xrs))
+            {
+                xmlDoc.Load(xr);
+            }
+
+            var TuNds = xmlDoc.SelectNodes("//xlfns:trans-unit", xnm);
+            foreach (XmlNode TuNd in TuNds)
+            {
+                var tagsNoteNd = TuNd.SelectSingleNode("./xlfns:note[@from='tags']", xnm);
+                if (tagsNoteNd != null)
+                    tagsNoteNd.InnerXml = tagsInfo;
+                else
+                {
+                    XmlNode addNd = xmlDoc.CreateNode(XmlNodeType.Element, "note", nsdef);
+                    XmlElement addXe = (XmlElement)addNd;
+                    addXe.SetAttribute("from", "tags");
+                    addXe.InnerXml = tagsInfo;
+                    TuNd.AppendChild(addXe);
+                }
+
+                var commentNoteNd = TuNd.SelectSingleNode("./xlfns:note[@from='L10N comment']", xnm);
+                if (commentNoteNd != null)
+                    commentNoteNd.InnerXml = Comment;
+                else
+                {
+                    XmlNode addNd = xmlDoc.CreateNode(XmlNodeType.Element, "note", nsdef);
+                    XmlElement addXe = (XmlElement)addNd;
+                    addXe.SetAttribute("from", "L10N comment");
+                    addXe.InnerXml = Comment;
+                    TuNd.AppendChild(addXe);
+                }
+            }
+
+            XmlWriterSettings xws = new XmlWriterSettings();
+            xws.CheckCharacters = false;
+            xws.Encoding = Encoding.UTF8;
+            xws.Indent = true;
+            xws.NamespaceHandling = NamespaceHandling.OmitDuplicates;
+            xws.NewLineChars = "\r\n";
+            xws.NewLineHandling = NewLineHandling.None;
+            xws.NewLineOnAttributes = false;
+            xws.OmitXmlDeclaration = false;
+            using (var xw = XmlWriter.Create(fileOut, xws))
+            {
+                xmlDoc.Save(xw);
+            }
+
+            var textWrite = File.ReadAllText(fileOut);
+            var repand = Regex.Replace(textWrite, @"&amp;#38;(?!amp;|lt;|gt;)(#\d+?;|[a-zA-Z]+?;)", "&$1");
+            var repXmldef = Regex.Replace(repand, @"<\?xml\b[^<>]*\?>", defxml);
+            var addSpace1 = Regex.Replace(repXmldef, @">\s*<(target|source|note)\b", ">\r\n" + spaceTUChild + "<$1");
+            var addSpace2 = Regex.Replace(addSpace1, @">\s*<trans-unit\b", ">\r\n" + spaceTU + "<trans-unit");
+            var addSpace3 = Regex.Replace(addSpace2, @">\s*</trans-unit>", ">\r\n" + spaceTU + "</trans-unit>");
+            File.WriteAllText(fileOut, addSpace3, Encoding.UTF8);
+        }
+
         private void Form_editTagsInXLF_Load(object sender, EventArgs e)
         {
             this.panel_set.Enabled = true;
-            this.tb_pathInput.Text = "";
-            this.tb_tagsInfo.Text = "";
-            this.tb_pathOutput.Text = "";
+            this.tb_pathInput.Text = String.Empty;
+            this.tb_tagsInfo.Text = String.Empty;
+            this.chkBox_addComment.Checked = false;
+            this.tb_comment.Enabled = false;
+            this.tb_comment.BackColor = Color.Gainsboro;
+            this.tb_pathOutput.Text = String.Empty;
             this.proBar_progress.Visible = false;
             this.btn_run.Enabled = false;
         }
@@ -123,8 +201,11 @@ namespace WorkTool
             this.proBar_progress.Value = 0;
 
             var inputPath = this.tb_pathInput.Text;
-            var tagsInfo = this.tb_tagsInfo.Text;
             var outputPath = this.tb_pathOutput.Text;
+            var tagsInfo = this.tb_tagsInfo.Text;
+            var comment = String.Empty;
+            if (this.chkBox_addComment.Checked)
+                comment = this.tb_comment.Text;
 
             if (!Directory.Exists(inputPath))
             {
@@ -133,8 +214,8 @@ namespace WorkTool
             }
             else
             {
-                var files = Directory.GetFiles(inputPath, "*.xlf", SearchOption.AllDirectories);
-                if (files.Length < 1)
+                var files = Directory.EnumerateFiles(inputPath, "*.xlf", SearchOption.AllDirectories);
+                if (files.Count() < 1)
                 {
                     MessageBox.Show("There is no any applicable file in the Path Input.\r\n" + inputPath, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     this.tb_pathInput.Text = "";
@@ -143,19 +224,37 @@ namespace WorkTool
                 {
                     this.panel_set.Enabled = false;
                     this.btn_run.Enabled = false;
-                    this.proBar_progress.Maximum = files.Length;
+                    this.proBar_progress.Maximum = files.Count();
 
-                    foreach (var file in files)
+                    if (String.IsNullOrEmpty(comment) || String.IsNullOrWhiteSpace(comment))
                     {
-                        var fileout = file.Replace(inputPath, outputPath);
-                        if (File.Exists(fileout))
-                            File.Delete(fileout);
+                        foreach (var file in files)
+                        {
+                            var fileout = file.Replace(inputPath, outputPath);
+                            if (File.Exists(fileout))
+                                File.Delete(fileout);
 
-                        if (!Directory.Exists(Path.GetDirectoryName(fileout)))
-                            Directory.CreateDirectory(Path.GetDirectoryName(fileout));
+                            if (!Directory.Exists(Path.GetDirectoryName(fileout)))
+                                Directory.CreateDirectory(Path.GetDirectoryName(fileout));
 
-                        editTagsInfoInXLF(file, fileout, tagsInfo);
-                        this.proBar_progress.Value++;
+                            editTagsInfoInXLF(file, fileout, tagsInfo);
+                            this.proBar_progress.Value++;
+                        }
+                    }
+                    else
+                    {
+                        foreach (var file in files)
+                        {
+                            var fileout = file.Replace(inputPath, outputPath);
+                            if (File.Exists(fileout))
+                                File.Delete(fileout);
+
+                            if (!Directory.Exists(Path.GetDirectoryName(fileout)))
+                                Directory.CreateDirectory(Path.GetDirectoryName(fileout));
+
+                            editTagsAndCommentInXLF(file, fileout, tagsInfo, comment);
+                            this.proBar_progress.Value++;
+                        }
                     }
 
                     MessageBox.Show("Done!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -163,6 +262,28 @@ namespace WorkTool
                     this.btn_run.Enabled = true;
                 }
             }
+        }
+
+        private void chkBox_addComment_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.chkBox_addComment.Checked)
+            {
+                this.tb_comment.Enabled = true;
+                this.tb_comment.BackColor = Color.White;
+                this.tb_comment.Text = String.Empty;
+            }
+            else
+            {  
+                this.tb_comment.Text = String.Empty;
+                this.tb_comment.Enabled = false;
+                this.tb_comment.BackColor = Color.Gainsboro;
+            }
+        }
+
+        private void tb_comment_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.A)
+                this.tb_comment.SelectAll();
         }
     }
 }
